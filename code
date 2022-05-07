@@ -1,0 +1,77 @@
+#include <SoftwareSerial.h> 
+SoftwareSerial MyBlue(2, 3); // RX | TX 
+
+int a0 = 8;
+int a1 = 9;
+int b0 = 10;
+int b1 = 11; 
+void setup() 
+{ Serial.begin(9600); 
+ MyBlue.begin(9600); 
+ pinMode(a0, OUTPUT); 
+ pinMode(a1, OUTPUT); 
+ pinMode(b0, OUTPUT); 
+ pinMode(b1, OUTPUT); 
+ 
+ Serial.println("Ready to connect\nDefualt password is 1234 or 000"); 
+} 
+void loop() 
+{ 
+  int motion_type = 0; //Integer to save the transmitted value through bluetooth
+  if (MyBlue.available()) // If some data is received from device then this condition will be true.
+   motion_type = MyBlue.read(); //Function reads the data from the Bluetooth saves it in flag 
+   
+   if (motion_type == 1010)//Forward motion 
+   {  
+    int forward = motion_type;
+   int a0_read = forward%10;
+   int a1_read = (forward/10)%10;
+   int b0_read = (forward/100)%10;
+   int b1_read = (forward/1000)%10;
+   digitalWrite(a0 , a0_read);
+   digitalWrite(a1 , a1_read);
+   digitalWrite(b0 , b0_read);
+   digitalWrite(b1 , b1_read);
+   Serial.println("Forward Motion Commenced"); 
+   }  
+ else if (motion_type == 1010)//Backward motion 
+   {  
+    int backward = motion_type;
+   int a0_read = backward%10;
+   int a1_read = (backward/10)%10;
+   int b0_read = (backward/100)%10;
+   int b1_read = (backward/1000)%10;
+   digitalWrite(a0 , a0_read);
+   digitalWrite(a1 , a1_read);
+   digitalWrite(b0 , b0_read);
+   digitalWrite(b1 , b1_read);
+   Serial.println("Backward Motion Commenced"); 
+   }
+   else if (motion_type == 1001)//Left motion 
+   {  
+    int left = motion_type;
+   int a0_read = left%10;
+   int a1_read = (left/10)%10;
+   int b0_read = (left/100)%10;
+   int b1_read = (left/1000)%10;
+   digitalWrite(a0 , a0_read);
+   digitalWrite(a1 , a1_read);
+   digitalWrite(b0 , b0_read);
+   digitalWrite(b1 , b1_read);
+   Serial.println("Left Motion Commenced"); 
+   }
+   else if (motion_type == 1001)//Right motion 
+   {  
+    int right = motion_type;
+   int a0_read = right%10;
+   int a1_read = (right/10)%10;
+   int b0_read = (right/100)%10;
+   int b1_read = (right/1000)%10;
+   digitalWrite(a0 , a0_read);
+   digitalWrite(a1 , a1_read);
+   digitalWrite(b0 , b0_read);
+   digitalWrite(b1 , b1_read);
+   Serial.println("Right Motion Commenced"); 
+   }
+   
+   } 
